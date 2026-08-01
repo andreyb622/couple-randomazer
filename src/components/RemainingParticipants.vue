@@ -19,20 +19,17 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <section
-    class="rounded-xl p-3 flex flex-col gap-3"
-    style="background-color: var(--tg-secondary-bg); color: var(--tg-text)"
-  >
-    <h2 class="font-semibold text-base">Участники</h2>
+  <section class="card card--stack-lg">
+    <h2 class="card__title">Участники</h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div class="two-columns">
       <div>
-        <h3 class="text-sm font-medium mb-1.5">👩 Девушки</h3>
-        <ul v-if="girls.length > 0" class="flex flex-col gap-1.5">
+        <h3 class="card__subtitle">👩 Девушки</h3>
+        <ul v-if="girls.length > 0" class="list-stack">
           <li
             v-for="(name, index) in girls"
             :key="`remaining-girl-${name}-${index}`"
-            class="participant-item flex items-center justify-between rounded-lg px-3 py-2 text-sm"
+            class="participant-row"
           >
             <span>{{ name }}</span>
             <button
@@ -45,7 +42,7 @@ const emit = defineEmits<{
             </button>
           </li>
         </ul>
-        <p v-else class="text-sm py-1" style="color: var(--tg-hint)">Все в парах</p>
+        <p v-else class="empty-hint--inline">Все в парах</p>
 
         <AddParticipantInput
           placeholder="Имя девушки"
@@ -55,12 +52,12 @@ const emit = defineEmits<{
       </div>
 
       <div>
-        <h3 class="text-sm font-medium mb-1.5">👨 Парни</h3>
-        <ul v-if="boys.length > 0" class="flex flex-col gap-1.5">
+        <h3 class="card__subtitle">👨 Парни</h3>
+        <ul v-if="boys.length > 0" class="list-stack">
           <li
             v-for="(name, index) in boys"
             :key="`remaining-boy-${name}-${index}`"
-            class="participant-item flex items-center justify-between rounded-lg px-3 py-2 text-sm"
+            class="participant-row"
           >
             <span>{{ name }}</span>
             <button
@@ -73,7 +70,7 @@ const emit = defineEmits<{
             </button>
           </li>
         </ul>
-        <p v-else class="text-sm py-1" style="color: var(--tg-hint)">Все в парах</p>
+        <p v-else class="empty-hint--inline">Все в парах</p>
 
         <AddParticipantInput
           placeholder="Имя парня"

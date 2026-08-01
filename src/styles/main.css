@@ -1,6 +1,3 @@
-@import 'tailwindcss';
-@plugin 'daisyui';
-
 :root {
   --tg-bg: var(--tg-theme-bg-color, #ffffff);
   --tg-text: var(--tg-theme-text-color, #1f2937);
@@ -21,6 +18,15 @@
   --color-pick-text: #ffffff;
   --color-pick-disabled-bg: #dbeafe;
   --color-pick-disabled-text: #93b4db;
+
+  --control-height: 2.25rem;
+  --button-height: 3rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -32,6 +38,199 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Layout */
+
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 1.5rem;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.section-spacing {
+  margin-bottom: 1rem;
+}
+
+.actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.selection-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .two-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Header */
+
+.app-header {
+  text-align: center;
+  padding: 1rem;
+}
+
+.app-header__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.app-header__subtitle {
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0;
+  color: var(--tg-hint);
+}
+
+/* Cards */
+
+.card {
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background-color: var(--tg-secondary-bg);
+  color: var(--tg-text);
+}
+
+.card--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card--stack-lg {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card__hint {
+  font-size: 0.75rem;
+  color: var(--tg-hint);
+  margin: 0;
+}
+
+.card__subtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0 0 0.375rem;
+}
+
+/* Lists */
+
+.list-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.participant-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--control-height);
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  background-color: var(--tg-bg);
+  color: var(--tg-text);
+}
+
+.empty-hint {
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.5rem 0;
+  color: var(--tg-hint);
+  margin: 0;
+}
+
+.empty-hint--inline {
+  font-size: 0.875rem;
+  padding: 0.25rem 0;
+  color: var(--tg-hint);
+  margin: 0;
+}
+
+.text-error {
+  font-size: 0.75rem;
+  color: var(--color-active);
+  margin: 0;
+}
+
+/* Add input */
+
+.add-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.add-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* History */
+
+.history-empty {
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  background-color: var(--tg-secondary-bg);
+  color: var(--tg-hint);
+}
+
+.history-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.history-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.375rem;
+  min-height: var(--control-height);
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  background-color: var(--tg-bg);
+  color: var(--tg-text);
+}
+
+.history-index {
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* Animations */
+
 .pair-enter-active {
   transition: all 0.3s ease;
 }
@@ -41,9 +240,12 @@ body {
   transform: translateY(-8px);
 }
 
+/* Buttons & inputs */
+
 .participant-pick-btn {
   width: 100%;
-  padding: 0.5rem 0.75rem;
+  min-height: var(--control-height);
+  padding: 0 0.75rem;
   border: none;
   border-radius: 0.5rem;
   background-color: var(--tg-bg);
@@ -87,7 +289,8 @@ body {
 .participant-add-input {
   flex: 1;
   min-width: 0;
-  padding: 0.5rem 0.75rem;
+  height: var(--control-height);
+  padding: 0 0.75rem;
   border: 1px solid var(--color-disabled-border);
   border-radius: 0.5rem;
   background-color: var(--tg-bg);
@@ -103,8 +306,9 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  flex-shrink: 0;
+  width: var(--control-height);
+  height: var(--control-height);
   border: none;
   border-radius: 0.5rem;
   background-color: var(--color-pick);
@@ -128,7 +332,11 @@ body {
 
 .primary-btn {
   width: 100%;
-  padding: 1rem 1.25rem;
+  height: var(--button-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.25rem;
   border: none;
   border-radius: 0.5rem;
   background-color: var(--color-active);
@@ -153,7 +361,11 @@ body {
 
 .confirm-btn {
   width: 100%;
-  padding: 1rem 1.25rem;
+  height: var(--button-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.25rem;
   border: none;
   border-radius: 0.5rem;
   background-color: var(--color-pick);
@@ -178,7 +390,11 @@ body {
 
 .outline-btn {
   width: 100%;
-  padding: 0.75rem 1rem;
+  height: var(--button-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.25rem;
   border: 1.5px solid var(--color-pick);
   border-radius: 0.5rem;
   background: transparent;
@@ -203,7 +419,11 @@ body {
 
 .reset-btn {
   width: 100%;
-  padding: 0.75rem 1rem;
+  height: var(--button-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.25rem;
   border: 1.5px solid var(--color-active);
   border-radius: 0.5rem;
   background: transparent;

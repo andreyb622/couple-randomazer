@@ -10,16 +10,12 @@ defineProps<Props>();
 </script>
 
 <template>
-  <header class="text-center py-4 px-4">
-    <h1 class="text-2xl font-bold">👫 Рандомайзер пар</h1>
-    <p
-      v-if="phase === 'selection'"
-      class="text-sm mt-1"
-      style="color: var(--tg-hint)"
-    >
+  <header class="app-header">
+    <h1 class="app-header__title">👫 Рандомайзер пар</h1>
+    <p v-if="phase === 'selection'" class="app-header__subtitle">
       Выберите, кто будет участвовать
     </p>
-    <p v-else class="text-sm mt-1" style="color: var(--tg-hint)">
+    <p v-else class="app-header__subtitle">
       Осталось: {{ remainingCount }} {{ remainingCount === 1 ? "пара" : "пар" }}
     </p>
   </header>

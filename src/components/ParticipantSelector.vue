@@ -45,16 +45,13 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <section
-        class="rounded-xl p-3 flex flex-col gap-2"
-        style="background-color: var(--tg-secondary-bg); color: var(--tg-text)"
-      >
-        <h2 class="font-semibold text-base">👩 Девушки</h2>
-        <p class="text-xs" style="color: var(--tg-hint)">Нажмите на имя, чтобы выбрать</p>
+  <div class="selection-layout">
+    <div class="two-columns">
+      <section class="card card--stack">
+        <h2 class="card__title">👩 Девушки</h2>
+        <p class="card__hint">Нажмите на имя, чтобы выбрать</p>
 
-        <ul v-if="poolGirls.length > 0" class="flex flex-col gap-1.5">
+        <ul v-if="poolGirls.length > 0" class="list-stack">
           <li v-for="(name, index) in poolGirls" :key="`pool-girl-${name}-${index}`">
             <button
               type="button"
@@ -66,9 +63,7 @@ const emit = defineEmits<{
           </li>
         </ul>
 
-        <p v-else class="text-sm text-center py-2" style="color: var(--tg-hint)">
-          Все выбраны
-        </p>
+        <p v-else class="empty-hint">Все выбраны</p>
 
         <AddParticipantInput
           placeholder="Имя девушки"
@@ -77,14 +72,11 @@ const emit = defineEmits<{
         />
       </section>
 
-      <section
-        class="rounded-xl p-3 flex flex-col gap-2"
-        style="background-color: var(--tg-secondary-bg); color: var(--tg-text)"
-      >
-        <h2 class="font-semibold text-base">👨 Парни</h2>
-        <p class="text-xs" style="color: var(--tg-hint)">Нажмите на имя, чтобы выбрать</p>
+      <section class="card card--stack">
+        <h2 class="card__title">👨 Парни</h2>
+        <p class="card__hint">Нажмите на имя, чтобы выбрать</p>
 
-        <ul v-if="poolBoys.length > 0" class="flex flex-col gap-1.5">
+        <ul v-if="poolBoys.length > 0" class="list-stack">
           <li v-for="(name, index) in poolBoys" :key="`pool-boy-${name}-${index}`">
             <button
               type="button"
@@ -96,9 +88,7 @@ const emit = defineEmits<{
           </li>
         </ul>
 
-        <p v-else class="text-sm text-center py-2" style="color: var(--tg-hint)">
-          Все выбраны
-        </p>
+        <p v-else class="empty-hint">Все выбраны</p>
 
         <AddParticipantInput
           placeholder="Имя парня"
@@ -108,20 +98,17 @@ const emit = defineEmits<{
       </section>
     </div>
 
-    <section
-      class="rounded-xl p-3 flex flex-col gap-3"
-      style="background-color: var(--tg-secondary-bg); color: var(--tg-text)"
-    >
-      <h2 class="font-semibold text-base">Участники</h2>
+    <section class="card card--stack-lg">
+      <h2 class="card__title">Участники</h2>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="two-columns">
         <div>
-          <h3 class="text-sm font-medium mb-1.5">👩 Девушки</h3>
-          <ul v-if="selectedGirls.length > 0" class="flex flex-col gap-1.5">
+          <h3 class="card__subtitle">👩 Девушки</h3>
+          <ul v-if="selectedGirls.length > 0" class="list-stack">
             <li
               v-for="(name, index) in selectedGirls"
               :key="`selected-girl-${name}-${index}`"
-              class="participant-item flex items-center justify-between rounded-lg px-3 py-2 text-sm"
+              class="participant-row"
             >
               <span>{{ name }}</span>
               <button
@@ -134,16 +121,16 @@ const emit = defineEmits<{
               </button>
             </li>
           </ul>
-          <p v-else class="text-sm py-1" style="color: var(--tg-hint)">Пока никого не выбрано</p>
+          <p v-else class="empty-hint--inline">Пока никого не выбрано</p>
         </div>
 
         <div>
-          <h3 class="text-sm font-medium mb-1.5">👨 Парни</h3>
-          <ul v-if="selectedBoys.length > 0" class="flex flex-col gap-1.5">
+          <h3 class="card__subtitle">👨 Парни</h3>
+          <ul v-if="selectedBoys.length > 0" class="list-stack">
             <li
               v-for="(name, index) in selectedBoys"
               :key="`selected-boy-${name}-${index}`"
-              class="participant-item flex items-center justify-between rounded-lg px-3 py-2 text-sm"
+              class="participant-row"
             >
               <span>{{ name }}</span>
               <button
@@ -156,7 +143,7 @@ const emit = defineEmits<{
               </button>
             </li>
           </ul>
-          <p v-else class="text-sm py-1" style="color: var(--tg-hint)">Пока никого не выбрано</p>
+          <p v-else class="empty-hint--inline">Пока никого не выбрано</p>
         </div>
       </div>
     </section>

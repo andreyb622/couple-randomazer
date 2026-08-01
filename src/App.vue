@@ -77,7 +77,7 @@ function handleRemoveParticipantBoy(index: number): void {
 </script>
 
 <template>
-  <div class="min-h-dvh flex flex-col px-4 pb-6 max-w-lg mx-auto">
+  <div class="app">
     <AppHeader :phase="phase" :remaining-count="remainingCount" />
 
     <ParticipantSelector
@@ -99,7 +99,7 @@ function handleRemoveParticipantBoy(index: number): void {
     />
 
     <template v-else>
-      <div class="mb-4">
+      <div class="section-spacing">
         <RemainingParticipants
           :girls="girls"
           :boys="boys"
@@ -112,23 +112,15 @@ function handleRemoveParticipantBoy(index: number): void {
         />
       </div>
 
-      <div class="mb-4">
+      <div class="section-spacing">
         <PairGenerator :can-generate="canGenerate" @generate="handleGenerate" />
       </div>
 
-      <div class="mb-4">
+      <div class="section-spacing">
         <PairHistory :pairs="pairs" />
       </div>
 
-      <div class="mb-4 flex flex-col gap-2">
-        <button
-          type="button"
-          class="outline-btn"
-          @click="backToSelection"
-        >
-          ← Назад к выбору
-        </button>
-
+      <div class="actions-group">
         <button
           type="button"
           class="reset-btn"
@@ -136,6 +128,14 @@ function handleRemoveParticipantBoy(index: number): void {
           @click="resetPairing"
         >
           ↺ Сбросить
+        </button>
+
+        <button
+          type="button"
+          class="outline-btn"
+          @click="backToSelection"
+        >
+          ← Назад к выбору
         </button>
       </div>
     </template>

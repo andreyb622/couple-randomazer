@@ -36,8 +36,8 @@ function handleAdd(): void {
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 mt-1">
-    <div class="flex gap-2">
+  <div class="add-input-group">
+    <div class="add-input-row">
       <input
         v-model="newName"
         type="text"
@@ -54,6 +54,6 @@ function handleAdd(): void {
         +
       </button>
     </div>
-    <p v-if="errorMessage" class="text-xs text-error">{{ errorMessage }}</p>
+    <p v-if="errorMessage" class="text-error">{{ errorMessage }}</p>
   </div>
 </template>
