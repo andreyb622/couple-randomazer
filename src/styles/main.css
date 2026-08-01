@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+:root {
+  --tg-bg: var(--tg-theme-bg-color, #ffffff);
+  --tg-text: var(--tg-theme-text-color, #000000);
+  --tg-hint: var(--tg-theme-hint-color, #999999);
+  --tg-link: var(--tg-theme-link-color, #2481cc);
+  --tg-button: var(--tg-theme-button-color, #2481cc);
+  --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
+  --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--tg-bg);
+  color: var(--tg-text);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pair-enter-active {
+  transition: all 0.3s ease;
+}
+
+.pair-enter-from {
+  opacity: 0;
+  transform: translateY(-8px);
+}
