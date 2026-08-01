@@ -12,7 +12,7 @@ defineProps<Props>()
   <section
     v-if="pairs.length > 0"
     class="rounded-xl p-3"
-    style="background-color: var(--tg-secondary-bg)"
+    style="background-color: var(--tg-secondary-bg); color: var(--tg-text)"
   >
     <h2 class="font-semibold text-base mb-2">История пар</h2>
 
@@ -20,8 +20,7 @@ defineProps<Props>()
       <li
         v-for="(pair, index) in pairs"
         :key="`${pair.girl}-${pair.boy}-${index}`"
-        class="rounded-lg px-3 py-2 text-sm"
-        style="background-color: var(--tg-bg)"
+        class="participant-item rounded-lg px-3 py-2 text-sm"
       >
         <span class="font-medium">{{ index + 1 }}.</span>
         {{ pair.girl }} + {{ pair.boy }}

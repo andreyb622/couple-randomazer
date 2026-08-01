@@ -3,12 +3,24 @@
 
 :root {
   --tg-bg: var(--tg-theme-bg-color, #ffffff);
-  --tg-text: var(--tg-theme-text-color, #000000);
-  --tg-hint: var(--tg-theme-hint-color, #999999);
+  --tg-text: var(--tg-theme-text-color, #1f2937);
+  --tg-hint: var(--tg-theme-hint-color, #9ca3af);
   --tg-link: var(--tg-theme-link-color, #2481cc);
   --tg-button: var(--tg-theme-button-color, #2481cc);
   --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
-  --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
+  --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f3f4f6);
+
+  --color-active: #ef6b6b;
+  --color-active-pressed: #e05555;
+  --color-active-text: #ffffff;
+  --color-disabled-bg: #e5e7eb;
+  --color-disabled-text: #9ca3af;
+  --color-disabled-border: #d1d5db;
+  --color-pick: #6ba3e8;
+  --color-pick-pressed: #5592dc;
+  --color-pick-text: #ffffff;
+  --color-pick-disabled-bg: #dbeafe;
+  --color-pick-disabled-text: #93b4db;
 }
 
 body {
@@ -27,4 +39,189 @@ body {
 .pair-enter-from {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+.participant-pick-btn {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--tg-bg);
+  color: var(--tg-text);
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.participant-pick-btn:active {
+  opacity: 0.7;
+}
+
+.participant-item {
+  background-color: var(--tg-bg);
+  color: var(--tg-text);
+}
+
+.participant-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--tg-hint);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.participant-remove-btn:hover {
+  color: var(--color-active);
+  background-color: color-mix(in srgb, var(--color-active) 10%, transparent);
+}
+
+.participant-add-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-disabled-border);
+  border-radius: 0.5rem;
+  background-color: var(--tg-bg);
+  color: var(--tg-text);
+  font-size: 0.875rem;
+}
+
+.participant-add-input::placeholder {
+  color: var(--tg-hint);
+}
+
+.participant-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--color-pick);
+  color: var(--color-pick-text);
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.participant-add-btn:active:not(:disabled) {
+  background-color: var(--color-pick-pressed);
+  transform: scale(0.96);
+}
+
+.participant-add-btn:disabled {
+  cursor: not-allowed;
+  background-color: var(--color-pick-disabled-bg);
+  color: var(--color-pick-disabled-text);
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--color-active);
+  color: var(--color-active-text);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.primary-btn:active:not(:disabled) {
+  background-color: var(--color-active-pressed);
+  transform: scale(0.99);
+}
+
+.primary-btn:disabled {
+  cursor: not-allowed;
+  background-color: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
+  border: 1px solid var(--color-disabled-border);
+}
+
+.confirm-btn {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--color-pick);
+  color: var(--color-pick-text);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.confirm-btn:active:not(:disabled) {
+  background-color: var(--color-pick-pressed);
+  transform: scale(0.99);
+}
+
+.confirm-btn:disabled {
+  cursor: not-allowed;
+  background-color: var(--color-pick-disabled-bg);
+  color: var(--color-pick-disabled-text);
+  border: 1px solid color-mix(in srgb, var(--color-pick) 25%, transparent);
+}
+
+.outline-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--color-pick);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--color-pick);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.outline-btn:active:not(:disabled) {
+  background-color: color-mix(in srgb, var(--color-pick) 10%, transparent);
+  transform: scale(0.99);
+}
+
+.outline-btn:disabled {
+  cursor: not-allowed;
+  color: var(--color-pick-disabled-text);
+  border-color: color-mix(in srgb, var(--color-pick) 30%, transparent);
+  background-color: var(--color-pick-disabled-bg);
+}
+
+.reset-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--color-active);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--color-active);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.reset-btn:active:not(:disabled) {
+  background-color: color-mix(in srgb, var(--color-active) 10%, transparent);
+  transform: scale(0.99);
+}
+
+.reset-btn:disabled {
+  cursor: not-allowed;
+  color: var(--color-disabled-text);
+  border-color: var(--color-disabled-border);
+  background-color: var(--color-disabled-bg);
 }

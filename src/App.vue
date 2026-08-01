@@ -1,21 +1,38 @@
 <script setup lang="ts">
 import AppHeader from './components/AppHeader.vue'
-import NameList from './components/NameList.vue'
+import ParticipantSelector from './components/ParticipantSelector.vue'
+import RemainingParticipants from './components/RemainingParticipants.vue'
 import PairGenerator from './components/PairGenerator.vue'
 import PairHistory from './components/PairHistory.vue'
 import { usePairRandomizer } from './composables/usePairRandomizer'
 import { useTelegramApp } from './composables/useTelegramApp'
 
 const {
+  phase,
+  poolGirls,
+  poolBoys,
+  selectedGirls,
+  selectedBoys,
   girls,
   boys,
   pairs,
+  canConfirmSelection,
   canGenerate,
+  canResetSelection,
+  canResetPairing,
   remainingCount,
+  selectGirl,
+  selectBoy,
+  deselectGirl,
+  deselectBoy,
+  confirmSelection,
   generatePair,
-  reset,
-  addName,
-  removeName,
+  addToPool,
+  addParticipant,
+  removeParticipant,
+  resetSelection,
+  resetPairing,
+  backToSelection,
 } = usePairRandomizer()
 
 const { hapticImpact } = useTelegramApp()
@@ -28,58 +45,99 @@ function handleGenerate(): void {
   }
 }
 
-function handleAddGirl(name: string): void {
-  addName('girls', name)
+function handleConfirmSelection(): void {
+  if (confirmSelection()) {
+    hapticImpact('light')
+  }
 }
 
-function handleAddBoy(name: string): void {
-  addName('boys', name)
+function handleAddPoolGirl(name: string): void {
+  addToPool('girls', name)
 }
 
-function handleRemoveGirl(index: number): void {
-  removeName('girls', index)
+function handleAddPoolBoy(name: string): void {
+  addToPool('boys', name)
 }
 
-function handleRemoveBoy(index: number): void {
-  removeName('boys', index)
+function handleAddParticipantGirl(name: string): void {
+  addParticipant('girls', name)
+}
+
+function handleAddParticipantBoy(name: string): void {
+  addParticipant('boys', name)
+}
+
+function handleRemoveParticipantGirl(index: number): void {
+  removeParticipant('girls', index)
+}
+
+function handleRemoveParticipantBoy(index: number): void {
+  removeParticipant('boys', index)
 }
 </script>
 
 <template>
   <div class="min-h-dvh flex flex-col px-4 pb-6 max-w-lg mx-auto">
-    <AppHeader :remaining-count="remainingCount" />
+    <AppHeader :phase="phase" :remaining-count="remainingCount" />
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-      <NameList
-        title="👩 Девушки"
-        list-type="girls"
-        :names="girls"
-        @add="handleAddGirl"
-        @remove="handleRemoveGirl"
-      />
-      <NameList
-        title="👨 Парни"
-        list-type="boys"
-        :names="boys"
-        @add="handleAddBoy"
-        @remove="handleRemoveBoy"
-      />
-    </div>
+    <ParticipantSelector
+      v-if="phase === 'selection'"
+      :pool-girls="poolGirls"
+      :pool-boys="poolBoys"
+      :selected-girls="selectedGirls"
+      :selected-boys="selectedBoys"
+      :can-confirm="canConfirmSelection"
+      :can-reset="canResetSelection"
+      @select-girl="selectGirl"
+      @select-boy="selectBoy"
+      @deselect-girl="deselectGirl"
+      @deselect-boy="deselectBoy"
+      @confirm="handleConfirmSelection"
+      @reset="resetSelection"
+      @add-girl="handleAddPoolGirl"
+      @add-boy="handleAddPoolBoy"
+    />
 
-    <div class="mb-4">
-      <PairGenerator :can-generate="canGenerate" @generate="handleGenerate" />
-    </div>
+    <template v-else>
+      <div class="mb-4">
+        <RemainingParticipants
+          :girls="girls"
+          :boys="boys"
+          :all-girls="selectedGirls"
+          :all-boys="selectedBoys"
+          @add-girl="handleAddParticipantGirl"
+          @add-boy="handleAddParticipantBoy"
+          @remove-girl="handleRemoveParticipantGirl"
+          @remove-boy="handleRemoveParticipantBoy"
+        />
+      </div>
 
-    <div class="mb-4">
-      <PairHistory :pairs="pairs" />
-    </div>
+      <div class="mb-4">
+        <PairGenerator :can-generate="canGenerate" @generate="handleGenerate" />
+      </div>
 
-    <button
-      type="button"
-      class="btn btn-outline w-full"
-      @click="reset"
-    >
-      ↺ Сбросить
-    </button>
+      <div class="mb-4">
+        <PairHistory :pairs="pairs" />
+      </div>
+
+      <div class="mb-4 flex flex-col gap-2">
+        <button
+          type="button"
+          class="outline-btn"
+          @click="backToSelection"
+        >
+          ← Назад к выбору
+        </button>
+
+        <button
+          type="button"
+          class="reset-btn"
+          :disabled="!canResetPairing"
+          @click="resetPairing"
+        >
+          ↺ Сбросить
+        </button>
+      </div>
+    </template>
   </div>
 </template>
