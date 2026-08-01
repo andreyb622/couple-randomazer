@@ -16,10 +16,28 @@ function getRandomIndex(length: number): number {
   return Math.floor(Math.random() * length)
 }
 
-function buildPool(initial: readonly string[], selected: string[]): string[] {
+function buildPool(catalog: readonly string[], selected: string[]): string[] {
   const selectedSet = new Set(selected.map((name) => name.toLowerCase()))
 
-  return initial.filter((name) => !selectedSet.has(name.toLowerCase()))
+  return catalog.filter((name) => !selectedSet.has(name.toLowerCase()))
+}
+
+function mergeCatalog(...lists: readonly string[][]): string[] {
+  const seen = new Set<string>()
+  const result: string[] = []
+
+  for (const list of lists) {
+    for (const name of list) {
+      const key = name.toLowerCase()
+
+      if (!seen.has(key)) {
+        seen.add(key)
+        result.push(name)
+      }
+    }
+  }
+
+  return result
 }
 
 function isDuplicateName(name: string, lists: readonly string[][]): boolean {
@@ -247,8 +265,11 @@ export function usePairRandomizer() {
   }
 
   function backToSelection(): void {
-    poolGirls.value = buildPool(INITIAL_GIRLS, selectedGirls.value)
-    poolBoys.value = buildPool(INITIAL_BOYS, selectedBoys.value)
+    const girlsCatalog = mergeCatalog(poolGirls.value, selectedGirls.value)
+    const boysCatalog = mergeCatalog(poolBoys.value, selectedBoys.value)
+
+    poolGirls.value = buildPool(girlsCatalog, selectedGirls.value)
+    poolBoys.value = buildPool(boysCatalog, selectedBoys.value)
     girls.value = []
     boys.value = []
     pairs.value = []

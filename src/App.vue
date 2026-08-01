@@ -35,7 +35,7 @@ const {
   backToSelection,
 } = usePairRandomizer()
 
-const { hapticImpact } = useTelegramApp()
+const { isTelegram, hapticImpact, hapticSelection } = useTelegramApp()
 
 function handleGenerate(): void {
   const pair = generatePair()
@@ -51,33 +51,82 @@ function handleConfirmSelection(): void {
   }
 }
 
+function handleSelectGirl(index: number): void {
+  selectGirl(index)
+  hapticSelection()
+}
+
+function handleSelectBoy(index: number): void {
+  selectBoy(index)
+  hapticSelection()
+}
+
+function handleDeselectGirl(index: number): void {
+  deselectGirl(index)
+  hapticImpact('light')
+}
+
+function handleDeselectBoy(index: number): void {
+  deselectBoy(index)
+  hapticImpact('light')
+}
+
 function handleAddPoolGirl(name: string): void {
-  addToPool('girls', name)
+  if (addToPool('girls', name)) {
+    hapticImpact('light')
+  }
 }
 
 function handleAddPoolBoy(name: string): void {
-  addToPool('boys', name)
+  if (addToPool('boys', name)) {
+    hapticImpact('light')
+  }
 }
 
 function handleAddParticipantGirl(name: string): void {
-  addParticipant('girls', name)
+  if (addParticipant('girls', name)) {
+    hapticImpact('light')
+  }
 }
 
 function handleAddParticipantBoy(name: string): void {
-  addParticipant('boys', name)
+  if (addParticipant('boys', name)) {
+    hapticImpact('light')
+  }
 }
 
 function handleRemoveParticipantGirl(index: number): void {
   removeParticipant('girls', index)
+  hapticImpact('light')
 }
 
 function handleRemoveParticipantBoy(index: number): void {
   removeParticipant('boys', index)
+  hapticImpact('light')
+}
+
+function handleResetSelection(): void {
+  resetSelection()
+  hapticImpact('light')
+}
+
+function handleResetPairing(): void {
+  resetPairing()
+  hapticImpact('light')
+}
+
+function handleBackToSelection(): void {
+  backToSelection()
+  hapticImpact('light')
 }
 </script>
 
 <template>
   <div class="app">
+    <p v-if="!isTelegram" class="browser-hint">
+      Откройте приложение через Telegram для полного опыта
+    </p>
+
     <AppHeader :phase="phase" :remaining-count="remainingCount" />
 
     <ParticipantSelector
@@ -88,12 +137,12 @@ function handleRemoveParticipantBoy(index: number): void {
       :selected-boys="selectedBoys"
       :can-confirm="canConfirmSelection"
       :can-reset="canResetSelection"
-      @select-girl="selectGirl"
-      @select-boy="selectBoy"
-      @deselect-girl="deselectGirl"
-      @deselect-boy="deselectBoy"
+      @select-girl="handleSelectGirl"
+      @select-boy="handleSelectBoy"
+      @deselect-girl="handleDeselectGirl"
+      @deselect-boy="handleDeselectBoy"
       @confirm="handleConfirmSelection"
-      @reset="resetSelection"
+      @reset="handleResetSelection"
       @add-girl="handleAddPoolGirl"
       @add-boy="handleAddPoolBoy"
     />
@@ -125,7 +174,7 @@ function handleRemoveParticipantBoy(index: number): void {
           type="button"
           class="reset-btn"
           :disabled="!canResetPairing"
-          @click="resetPairing"
+          @click="handleResetPairing"
         >
           ↺ Сбросить
         </button>
@@ -133,7 +182,7 @@ function handleRemoveParticipantBoy(index: number): void {
         <button
           type="button"
           class="outline-btn"
-          @click="backToSelection"
+          @click="handleBackToSelection"
         >
           ← Назад к выбору
         </button>

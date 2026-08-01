@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { AppPhase } from "../composables/usePairRandomizer";
+import type { AppPhase } from '../composables/usePairRandomizer'
+import { pluralizePairs } from '../utils/pluralize'
 
 interface Props {
-  phase: AppPhase;
-  remainingCount: number;
+  phase: AppPhase
+  remainingCount: number
 }
 
-defineProps<Props>();
+defineProps<Props>()
 </script>
 
 <template>
@@ -16,7 +17,7 @@ defineProps<Props>();
       Выберите, кто будет участвовать
     </p>
     <p v-else class="app-header__subtitle">
-      Осталось: {{ remainingCount }} {{ remainingCount === 1 ? "пара" : "пар" }}
+      Осталось: {{ remainingCount }} {{ pluralizePairs(remainingCount) }}
     </p>
   </header>
 </template>

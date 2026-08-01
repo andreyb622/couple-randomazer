@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import AddParticipantInput from './AddParticipantInput.vue'
+import ParticipantsPanel from './ParticipantsPanel.vue'
 
 interface Props {
   poolGirls: string[]
@@ -98,55 +99,18 @@ const emit = defineEmits<{
       </section>
     </div>
 
-    <section class="card card--stack-lg">
-      <h2 class="card__title">Участники</h2>
-
-      <div class="two-columns">
-        <div>
-          <h3 class="card__subtitle">👩 Девушки</h3>
-          <ul v-if="selectedGirls.length > 0" class="list-stack">
-            <li
-              v-for="(name, index) in selectedGirls"
-              :key="`selected-girl-${name}-${index}`"
-              class="participant-row"
-            >
-              <span>{{ name }}</span>
-              <button
-                type="button"
-                class="participant-remove-btn"
-                aria-label="Убрать из участников"
-                @click="emit('deselectGirl', index)"
-              >
-                ✕
-              </button>
-            </li>
-          </ul>
-          <p v-else class="empty-hint--inline">Пока никого не выбрано</p>
-        </div>
-
-        <div>
-          <h3 class="card__subtitle">👨 Парни</h3>
-          <ul v-if="selectedBoys.length > 0" class="list-stack">
-            <li
-              v-for="(name, index) in selectedBoys"
-              :key="`selected-boy-${name}-${index}`"
-              class="participant-row"
-            >
-              <span>{{ name }}</span>
-              <button
-                type="button"
-                class="participant-remove-btn"
-                aria-label="Убрать из участников"
-                @click="emit('deselectBoy', index)"
-              >
-                ✕
-              </button>
-            </li>
-          </ul>
-          <p v-else class="empty-hint--inline">Пока никого не выбрано</p>
-        </div>
-      </div>
-    </section>
+    <ParticipantsPanel
+      :girls="selectedGirls"
+      :boys="selectedBoys"
+      :all-girls="allPoolGirls"
+      :all-boys="allPoolBoys"
+      empty-hint="Пока никого не выбрано"
+      remove-aria-label="Убрать из участников"
+      @remove-girl="emit('deselectGirl', $event)"
+      @remove-boy="emit('deselectBoy', $event)"
+      @add-girl="emit('addGirl', $event)"
+      @add-boy="emit('addBoy', $event)"
+    />
 
     <button
       type="button"
